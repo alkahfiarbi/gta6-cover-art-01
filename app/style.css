@@ -1,0 +1,207 @@
+/* Vice Cover Studio — editor chrome. Dark violet night, hot pink accents, the
+   same sunset the cover grades use. All of it is local: no web fonts here. */
+@font-face {
+  font-family: "Anton";
+  src: url("./fonts/Anton-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Pacifico";
+  src: url("./fonts/Pacifico-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #12081d;
+  color: #f5ecff;
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 18px;
+  padding: 14px 22px;
+  background: linear-gradient(90deg, #2b0f3d 0%, #7a1e6e 55%, #ff5e3a 100%);
+  border-bottom: 3px solid #ff2e88;
+}
+
+.brand {
+  font-family: "Anton", system-ui, sans-serif;
+  font-size: 26px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 2px 2px 0 #ff2e88, 4px 4px 0 rgba(0, 0, 0, 0.45);
+}
+
+.brand-mark {
+  display: inline-block;
+  background: #ff2e88;
+  color: #fff;
+  padding: 0 8px;
+  margin-right: 8px;
+  transform: skewX(-8deg);
+  box-shadow: 3px 3px 0 #00e5ff;
+}
+
+.tagline { margin: 0; color: #ffd9ec; font-size: 13px; }
+
+.studio {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 18px;
+  padding: 18px 22px 28px;
+  align-items: start;
+}
+
+.controls h1 {
+  font-family: "Anton", system-ui, sans-serif;
+  font-size: 22px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 2px 0 12px;
+  color: #ffe9f4;
+}
+
+.controls fieldset {
+  border: 1px solid #4a2560;
+  border-radius: 10px;
+  padding: 12px 14px 14px;
+  margin: 0 0 12px;
+  background: #1c0f2a;
+}
+
+.controls legend {
+  font-weight: 700;
+  color: #ffb3d9;
+  padding: 0 6px;
+}
+
+.controls label { display: block; margin: 8px 0; }
+.controls label > input[type="text"] {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 10px;
+  border: 1px solid #6b3a86;
+  border-radius: 6px;
+  background: #2a1540;
+  color: #fff;
+  font-size: 15px;
+}
+.controls label > input[type="text"]:focus { outline: 2px solid #ff2e88; }
+
+.choices { display: flex; flex-wrap: wrap; gap: 6px; }
+.choices label {
+  margin: 0;
+  padding: 6px 10px;
+  border: 1px solid #6b3a86;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 13px;
+  background: #2a1540;
+}
+.choices label:has(input:checked) {
+  background: #ff2e88;
+  border-color: #ff2e88;
+  color: #fff;
+  font-weight: 700;
+}
+.choices input { accent-color: #ff2e88; }
+
+button {
+  cursor: pointer;
+  border: 1px solid #6b3a86;
+  border-radius: 8px;
+  background: #2a1540;
+  color: #f5ecff;
+  padding: 8px 12px;
+  font-size: 14px;
+  margin: 4px 4px 4px 0;
+}
+button:hover { border-color: #ff2e88; }
+button:focus-visible { outline: 2px solid #00e5ff; }
+
+.file-label {
+  display: block;
+  border: 2px dashed #ff2e88;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  background: #241233;
+}
+.file-label input { display: block; margin: 8px auto 0; }
+
+.export-btn {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 13px;
+  font-family: "Anton", system-ui, sans-serif;
+  font-size: 19px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #ff2e88, #ff5e3a);
+  border: none;
+  color: #fff;
+  box-shadow: 0 4px 0 #a3134f;
+}
+.export-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #a3134f; }
+
+.tip { font-size: 13px; color: #cbb3dd; margin: 8px 0; }
+#status { min-height: 1.4em; color: #7dffd4; font-weight: 600; }
+#heatValue { color: #ffd23e; letter-spacing: 2px; }
+
+.tray { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.tray figure {
+  margin: 0;
+  width: 76px;
+  cursor: pointer;
+  border: 3px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+.tray figure.selected { border-color: #00e5ff; }
+.tray figure img { display: block; width: 100%; height: 58px; object-fit: cover; }
+.tray figcaption {
+  font-size: 10px;
+  text-align: center;
+  background: #2a1540;
+  padding: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stage { position: sticky; top: 12px; }
+.stage canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: calc(100vh - 90px);
+  object-fit: contain;
+  border: 3px solid #ff2e88;
+  border-radius: 6px;
+  background: #000;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  cursor: crosshair;
+}
+
+/* Screenshot mode: the exported PNG alone, edge to edge. */
+body.shot-cover .topbar,
+body.shot-cover .studio { display: none; }
+body.shot-cover { background: #000; }
+#shotView { margin: 0; }
+#shotView img { display: block; width: 100vw; height: 100vh; object-fit: contain; }
+
+@media (max-width: 900px) {
+  .studio { grid-template-columns: 1fr; }
+  .stage { position: static; }
+}
