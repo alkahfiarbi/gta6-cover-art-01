@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vice Cover Studio — GTA-style cover maker</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="brand-mark">VC</span> Vice Cover Studio</div>
+  <p class="tagline">Your photos, a Vice City sunset, one poster. Everything runs offline — photos never leave this machine.</p>
+</header>
+
+<main class="studio">
+  <section class="controls" aria-label="Editor controls">
+    <h1>Make your cover</h1>
+
+    <fieldset>
+      <legend>1 · Photos</legend>
+      <label class="file-label">Add photos from this device
+        <input id="photoFiles" type="file" accept="image/*" multiple>
+      </label>
+      <button id="loadSamples" type="button">Use sample photos</button>
+      <div id="tray" class="tray" aria-label="Your photos"></div>
+      <p class="tip">Click a panel in the preview to select it, then click a photo here to fill it.
+        <button id="fillAll" type="button">Fill every panel with the selected photo</button></p>
+    </fieldset>
+
+    <fieldset>
+      <legend>2 · Layout</legend>
+      <div class="choices" id="layoutChoices">
+        <label><input type="radio" name="layout" value="hero" checked> Hero + 3</label>
+        <label><input type="radio" name="layout" value="grid4"> Grid 4</label>
+        <label><input type="radio" name="layout" value="grid9"> Grid 9</label>
+        <label><input type="radio" name="layout" value="full"> Full bleed</label>
+        <label><input type="radio" name="layout" value="tilt"> Tilted snap</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>3 · Colour grade</legend>
+      <div class="choices" id="gradeChoices">
+        <label><input type="radio" name="grade" value="sunset" checked> Sunset</label>
+        <label><input type="radio" name="grade" value="neon"> Neon Night</label>
+        <label><input type="radio" name="grade" value="vice"> Vice City</label>
+        <label><input type="radio" name="grade" value="heat"> Heat Wave</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>4 · Words</legend>
+      <label>Title <input id="title" type="text" maxlength="28" value="SUNSET HEIST"></label>
+      <label>Subtitle <input id="subtitle" type="text" maxlength="40" value="vice city nights"></label>
+      <label>Badge <input id="badge" type="text" maxlength="14" value="VICE CITY"></label>
+      <label>Heat <input id="heat" type="range" min="1" max="5" step="1" value="4">
+        <span id="heatValue">★★★★☆</span></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>5 · Selected panel</legend>
+      <p class="tip">Panel <strong id="panelName">1</strong> is selected. Drag its photo on the preview to move it.</p>
+      <label>Zoom <input id="zoom" type="range" min="1" max="3" step="0.05" value="1"></label>
+      <button id="resetPanel" type="button">Reset this panel</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>6 · Export size</legend>
+      <div class="choices" id="sizeChoices">
+        <label><input type="radio" name="size" value="1920x1080" checked> 1920 × 1080</label>
+        <label><input type="radio" name="size" value="1080x1080"> 1080 × 1080</label>
+        <label><input type="radio" name="size" value="1080x1350"> 1080 × 1350</label>
+      </div>
+      <button id="export" type="button" class="export-btn">Export PNG</button>
+      <p id="status" role="status"></p>
+    </fieldset>
+  </section>
+
+  <section class="stage" aria-label="Live preview">
+    <canvas id="cover" width="1920" height="1080" aria-label="Live cover preview"></canvas>
+    <p class="tip">Live preview — what you see is what the PNG will be.</p>
+  </section>
+</main>
+
+<div id="shotView" hidden><img id="shotImg" alt="Exported cover art"></div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
