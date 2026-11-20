@@ -1,5 +1,6 @@
-/* Vice Cover Studio — editor chrome. Dark violet night, hot pink accents, the
-   same sunset the cover grades use. All of it is local: no web fonts here. */
+/* Vice Cover Studio v2 — editor chrome. Dark violet night, hot pink
+   accents, the same sunset the cover grades use. All of it is local:
+   no web fonts, no network, nothing fetched. */
 @font-face {
   font-family: "Anton";
   src: url("./fonts/Anton-Regular.ttf") format("truetype");
@@ -53,7 +54,7 @@ body {
 
 .studio {
   display: grid;
-  grid-template-columns: 340px minmax(0, 1fr);
+  grid-template-columns: 360px minmax(0, 1fr);
   gap: 18px;
   padding: 18px 22px 28px;
   align-items: start;
@@ -66,6 +67,23 @@ body {
   text-transform: uppercase;
   margin: 2px 0 12px;
   color: #ffe9f4;
+}
+
+.toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.toolbar button {
+  flex: 1;
+  font-weight: 700;
+}
+
+.surprise-btn {
+  background: linear-gradient(90deg, #ff2e88, #ff9d00) !important;
+  border-color: #ff9d00 !important;
+  color: #fff;
 }
 
 .controls fieldset {
@@ -96,6 +114,16 @@ body {
 }
 .controls label > input[type="text"]:focus { outline: 2px solid #ff2e88; }
 
+.controls label.check {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 13px;
+  color: #cbb3dd;
+  cursor: pointer;
+}
+.controls label.check input { margin-top: 3px; accent-color: #ff2e88; }
+
 .choices { display: flex; flex-wrap: wrap; gap: 6px; }
 .choices label {
   margin: 0;
@@ -124,8 +152,12 @@ button {
   font-size: 14px;
   margin: 4px 4px 4px 0;
 }
-button:hover { border-color: #ff2e88; }
+button:hover:not(:disabled) { border-color: #ff2e88; }
 button:focus-visible { outline: 2px solid #00e5ff; }
+button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
 
 .file-label {
   display: block;
@@ -157,6 +189,7 @@ button:focus-visible { outline: 2px solid #00e5ff; }
 .tip { font-size: 13px; color: #cbb3dd; margin: 8px 0; }
 #status { min-height: 1.4em; color: #7dffd4; font-weight: 600; }
 #heatValue { color: #ffd23e; letter-spacing: 2px; }
+#rotateValue { color: #7dd3ff; letter-spacing: 1px; }
 
 .tray { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
 .tray figure {

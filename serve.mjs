@@ -1,12 +1,13 @@
 // Dev-only static server for app/ (Node 22, standard library only):
 // `node serve.mjs` serves app/ on http://localhost:8123. Not part of the
 // entry handed to the grader — main.ts only copies app/ and screenshots/.
+// An optional first argument picks the port: `node serve.mjs 8080`.
 import { createReadStream, statSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { extname, join, normalize, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const root = resolve(fileURLToPath(new URL('./app', import.meta.url)));
+const appRoot = resolve(fileURLToPath(new URL('./app', import.meta.url)));
 const port = Number(process.argv[2] ?? 8123);
 
 const MIME = {
@@ -20,18 +21,23 @@ const MIME = {
   '.txt': 'text/plain; charset=utf-8',
 };
 
+function safePath(requestPath) {
+  const decoded = decodeURIComponent(requestPath);
+  const cleaned = decoded.endsWith('/') ? `${decoded}index.html` : decoded;
+  const file = resolve(join(appRoot, normalize(cleaned)));
+  if (file !== appRoot && !file.startsWith(appRoot + sep)) return null;
+  return file;
+}
+
 createServer((request, response) => {
-  const url = new URL(request.url ?? '/', 'http://localhost');
-  let pathname;
+  let file;
   try {
-    pathname = decodeURIComponent(url.pathname);
+    file = safePath(new URL(request.url ?? '/', 'http://localhost').pathname);
   } catch {
     response.writeHead(400).end('bad request');
     return;
   }
-  if (pathname.endsWith('/')) pathname += 'index.html';
-  const file = resolve(join(root, normalize(pathname)));
-  if (file !== root && !file.startsWith(root + sep)) {
+  if (!file) {
     response.writeHead(403).end('forbidden');
     return;
   }
@@ -51,5 +57,5 @@ createServer((request, response) => {
   });
   createReadStream(file).pipe(response);
 }).listen(port, '127.0.0.1', () => {
-  console.log(`Vice Cover Studio is on http://localhost:${port}`);
+  console.log(`Vice Cover Studio v2 is on http://localhost:${port}`);
 });

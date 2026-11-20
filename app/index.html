@@ -3,18 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vice Cover Studio — GTA-style cover maker</title>
+<title>Vice Cover Studio v2 — GTA-style cover maker</title>
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 <header class="topbar">
   <div class="brand"><span class="brand-mark">VC</span> Vice Cover Studio</div>
-  <p class="tagline">Your photos, a Vice City sunset, one poster. Everything runs offline — photos never leave this machine.</p>
+  <p class="tagline">Your photos, a Vice City sunset, one poster. Ten layouts, seven grades, undo and a Surprise me button — everything runs offline, photos never leave this machine.</p>
 </header>
 
 <main class="studio">
   <section class="controls" aria-label="Editor controls">
     <h1>Make your cover</h1>
+
+    <div class="toolbar" role="group" aria-label="Undo, redo and surprise">
+      <button id="undoBtn" type="button" disabled>↩ Undo</button>
+      <button id="redoBtn" type="button" disabled>↪ Redo</button>
+      <button id="surpriseBtn" type="button" class="surprise-btn">🎲 Surprise me</button>
+    </div>
+    <p class="tip">Undo works with Ctrl+Z, redo with Ctrl+Y. Surprise me rolls a new layout, grade, caption and photo fill in one click.</p>
 
     <fieldset>
       <legend>1 · Photos</legend>
@@ -25,27 +32,37 @@
       <div id="tray" class="tray" aria-label="Your photos"></div>
       <p class="tip">Click a panel in the preview to select it, then click a photo here to fill it.
         <button id="fillAll" type="button">Fill every panel with the selected photo</button></p>
+      <label class="check"><input id="smartFill" type="checkbox" checked> Smart fill — crop each photo face-aware (faces sit upper-centre, so the crop keeps them)</label>
     </fieldset>
 
     <fieldset>
-      <legend>2 · Layout</legend>
+      <legend>2 · Layout — 10 ways to frame it</legend>
       <div class="choices" id="layoutChoices">
         <label><input type="radio" name="layout" value="hero" checked> Hero + 3</label>
         <label><input type="radio" name="layout" value="grid4"> Grid 4</label>
         <label><input type="radio" name="layout" value="grid9"> Grid 9</label>
         <label><input type="radio" name="layout" value="full"> Full bleed</label>
         <label><input type="radio" name="layout" value="tilt"> Tilted snap</label>
+        <label><input type="radio" name="layout" value="slash"> Slashed key art</label>
+        <label><input type="radio" name="layout" value="cast6"> Whole-cast 6</label>
+        <label><input type="radio" name="layout" value="comic"> Comic strip</label>
+        <label><input type="radio" name="layout" value="duo"> Diagonal duo</label>
+        <label><input type="radio" name="layout" value="triptych"> Poster triptych</label>
       </div>
     </fieldset>
 
     <fieldset>
-      <legend>3 · Colour grade</legend>
+      <legend>3 · Colour grade — 7 Vice looks</legend>
       <div class="choices" id="gradeChoices">
         <label><input type="radio" name="grade" value="sunset" checked> Sunset</label>
         <label><input type="radio" name="grade" value="neon"> Neon Night</label>
         <label><input type="radio" name="grade" value="vice"> Vice City</label>
         <label><input type="radio" name="grade" value="heat"> Heat Wave</label>
+        <label><input type="radio" name="grade" value="ink"> Poster Ink</label>
+        <label><input type="radio" name="grade" value="golden"> Golden Hour</label>
+        <label><input type="radio" name="grade" value="noir"> Palm Noir</label>
       </div>
+      <p class="tip">Grades are overlays on top of your photos — your originals are never changed.</p>
     </fieldset>
 
     <fieldset>
@@ -61,6 +78,9 @@
       <legend>5 · Selected panel</legend>
       <p class="tip">Panel <strong id="panelName">1</strong> is selected. Drag its photo on the preview to move it.</p>
       <label>Zoom <input id="zoom" type="range" min="1" max="3" step="0.05" value="1"></label>
+      <label>Rotate <input id="rotate" type="range" min="-20" max="20" step="1" value="0">
+        <span id="rotateValue">0°</span></label>
+      <button id="flipPanel" type="button">Flip panel</button>
       <button id="resetPanel" type="button">Reset this panel</button>
     </fieldset>
 
