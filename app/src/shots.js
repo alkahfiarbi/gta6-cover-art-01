@@ -4,7 +4,7 @@
 // `caption`, `subtitle`, `badge`, `heat` and `photos` (comma-separated
 // sample names) pick the scene. `smart=0` turns the face-aware fill off.
 // window.__shotReady is set once the scene is painted.
-import { panelCount } from './cover.js';
+import { slotCount } from './cover.js';
 
 async function waitForFonts() {
   try {
@@ -19,7 +19,7 @@ async function waitForFonts() {
 }
 
 /** Reads the scene out of the query string and into the editor state. */
-function applySceneParams(query, state) {
+function applyScene(query, state) {
   state.layout = query.get('layout') ?? 'hero';
   state.grade = query.get('grade') ?? 'sunset';
   state.size = query.get('size') ?? '1920x1080';
@@ -31,11 +31,11 @@ function applySceneParams(query, state) {
 }
 
 /** Fills the visible panels with the named samples, in order, cycling. */
-function assignWantedPhotos(query, ctx) {
+function fillWantedPhotos(query, ctx) {
   const { state, trayPhotos } = ctx;
   const wanted = (query.get('photos') ?? '').split(',').map((s) => s.trim()).filter(Boolean);
   if (wanted.length === 0) return;
-  const count = panelCount(state.layout);
+  const count = slotCount(state.layout);
   for (let i = 0; i < count; i++) {
     const name = wanted[i % wanted.length];
     const foundAt = trayPhotos.findIndex((p) => p.name === name);
@@ -66,15 +66,15 @@ async function showExportedCover(ctx) {
 }
 
 export async function runShot(shot, query, ctx) {
-  const { state, loadSamples, redraw } = ctx;
-  applySceneParams(query, state);
+  const { state, loadSamples, repaint } = ctx;
+  applyScene(query, state);
   await waitForFonts();
   await loadSamples();
-  assignWantedPhotos(query, ctx);
+  fillWantedPhotos(query, ctx);
   if (shot === 'cover') {
     await showExportedCover(ctx);
   } else {
-    redraw();
+    repaint();
   }
   requestAnimationFrame(() => requestAnimationFrame(() => { window.__shotReady = true; }));
 }
